@@ -16,25 +16,31 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class AuthenticationConfig {
 
-  private UserDetailsService userDetailsService;
-  private PasswordEncoder passwordEncoder;
-  private JwtService jwtService;
+    private UserDetailsService userDetailsService;
+    private JwtService jwtService;
 
-  @Bean
-  public AuthenticationManager authenticationManager() {
-    return new ProviderManager(daoAuthenticationProvider(), jwtAuthenticationProvider());
-  }
+    @Bean
+    public AuthenticationManager authenticationManager() {
+        return new ProviderManager(daoAuthenticationProvider(), jwtAuthenticationProvider());
+    }
 
-  public DaoAuthenticationProvider daoAuthenticationProvider() {
-    DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-    provider.setUserDetailsService(userDetailsService);
-    provider.setPasswordEncoder(passwordEncoder);
-    return provider;
-  }
+    @Bean
+    public DaoAuthenticationProvider daoAuthenticationProvider() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setUserDetailsService(userDetailsService);
+        provider.setPasswordEncoder(passwordEncoder());
+        return provider;
+    }
 
-  public JwtAuthenticationProvider jwtAuthenticationProvider() {
-    JwtAuthenticationProvider provider = new JwtAuthenticationProvider(jwtService);
-    return provider;
-  }
+    @Bean
+    public JwtAuthenticationProvider jwtAuthenticationProvider() {
+        JwtAuthenticationProvider provider = new JwtAuthenticationProvider(jwtService);
+        return provider;
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
 }

@@ -6,7 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 
 public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 
-  private String token;
+  private final String token;
   private Object principal;
 
   public JwtAuthenticationToken(String token) {
@@ -20,6 +20,7 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
       Collection<? extends GrantedAuthority> authorities
   ) {
     super(authorities);
+    this.setAuthenticated(true);
     this.token = token;
     this.principal = principal;
   }
