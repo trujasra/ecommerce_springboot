@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @AllArgsConstructor
 @RestController
 @RequestMapping("/products")
@@ -28,7 +30,7 @@ public class ProductController {
   private ProductService productService;
 
   @PostMapping
-  public ResponseEntity<Product> save(@RequestBody ProductDTO productDTO) {
+  public ResponseEntity<Product> save(@Valid @RequestBody ProductDTO productDTO) {
     Product product = productService.save(productDTO);
     return ResponseEntity.status(HttpStatus.CREATED).body(product);
   }
