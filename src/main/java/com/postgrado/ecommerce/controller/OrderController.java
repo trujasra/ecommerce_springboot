@@ -1,5 +1,6 @@
 package com.postgrado.ecommerce.controller;
 
+import com.postgrado.ecommerce.dto.MessageDTO;
 import com.postgrado.ecommerce.dto.OrderDTO;
 import com.postgrado.ecommerce.dto.OrderItemDTO;
 import com.postgrado.ecommerce.repository.OrderRepository;
@@ -28,7 +29,7 @@ public class OrderController {
   private OrderRepository orderRepository;
 
   @PostMapping
-  public ResponseEntity<String> save(@RequestBody OrderDTO orderDTO) {
+  public ResponseEntity<MessageDTO> save(@RequestBody OrderDTO orderDTO) {
     return ResponseEntity.status(HttpStatus.CREATED).body(orderService.save(orderDTO));
   }
 
