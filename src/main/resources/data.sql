@@ -1,7 +1,7 @@
-INSERT INTO categories(id, name, description) VALUES ('0243a270-8348-4a7f-867e-6c0cc5984adc','TRAVEL','Mochillas para viajar');
-INSERT INTO categories(id, name, description) VALUES ('d20a14b6-15d5-42ee-8779-36ea7be4dc6d','SCHOOL','Mochillas para la escuela');
-INSERT INTO categories(id, name, description) VALUES ('c179ad35-a5fc-4ef0-9a1b-110a332f818f','SPORT','Mochillas deportivas');
-INSERT INTO categories(id, name, description) VALUES ('4c5f3eef-37a1-43bc-a6bf-2be9a06c4ec6','WORK','Mochillas para el trabajo');
+INSERT IGNORE INTO categories(id, name, description) VALUES ('0243a270-8348-4a7f-867e-6c0cc5984adc','TRAVEL','Mochillas para viajar');
+INSERT IGNORE INTO categories(id, name, description) VALUES ('d20a14b6-15d5-42ee-8779-36ea7be4dc6d','SCHOOL','Mochillas para la escuela');
+INSERT IGNORE INTO categories(id, name, description) VALUES ('c179ad35-a5fc-4ef0-9a1b-110a332f818f','SPORT','Mochillas deportivas');
+INSERT IGNORE INTO categories(id, name, description) VALUES ('4c5f3eef-37a1-43bc-a6bf-2be9a06c4ec6','WORK','Mochillas para el trabajo');
 
 INSERT IGNORE INTO roles(id, name, description) VALUES ('27fea06b-f25c-46c2-880d-23c2b8c21f8d','ADMIN','Rol de administrador');
 INSERT IGNORE INTO roles(id, name, description) VALUES ('577272ea-fe2f-4c7c-833d-597046bc34be','USER','Rol de usuario');
