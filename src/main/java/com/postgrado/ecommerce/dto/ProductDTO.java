@@ -5,9 +5,9 @@ import java.util.UUID;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.URL;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 
 @Getter
@@ -15,14 +15,22 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 public class ProductDTO {
 
-    @NotBlank(message = "The product name can not be blank")
-    @Size(max = 70, min = 3, message = "The product name must to between 3 and 70")
+    @NotBlank(message = "{product.name.not-blank}" )
+    @Size(max = 70, min = 3, message = "{product.name.size}")
     private String name;
+    @NotBlank(message = "{product.description.not-blank}")
     private String description;
+    @URL
     private String imageUrl;
+    @NotNull
+    @DecimalMin(value = "0.0", inclusive = false, message = "{product.price.min}")
     private double price;
+    @NotNull
+    @Min(value = 0, message = "{product.stock.min}")
     private int stock;
+    @NotNull
     private boolean active;
+    @NotNull
     private UUID categoryId;
 }
 
