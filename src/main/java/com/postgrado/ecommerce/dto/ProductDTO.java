@@ -13,6 +13,7 @@ import javax.validation.constraints.*;
 @Getter
 @Setter
 @NoArgsConstructor
+
 public class ProductDTO {
 
     @NotBlank(message = "{product.name.not-blank}" )

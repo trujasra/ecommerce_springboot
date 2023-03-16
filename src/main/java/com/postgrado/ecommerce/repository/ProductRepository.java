@@ -15,12 +15,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, UUID> {
 
-    Page<Product> findByPriceBetween(Double minPrice, Double maxPrice, Pageable pageable);
+  Page<Product> findByPriceBetween(Double minPrice, Double maxPrice, Pageable pageable);
 
-    //ProductDTO findByCategory(UUID categoryId);
+  //List<Product> findByCategory(String categoryId);
 
-    @Query(value = "SELECT * "
-            + "FROM products  "
+  @Query(value = "SELECT * "
+            + "FROM products "
             + "WHERE products.category_id = ?1", nativeQuery = true)
-   List<ProductDTO> getProductCat(String categoryId);
+   List<Product> getProductByCategory(String categoryId);
 }
