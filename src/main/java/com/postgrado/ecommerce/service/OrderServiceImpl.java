@@ -35,9 +35,7 @@ public class OrderServiceImpl implements OrderService {
         order.setItems(items);
 
         Order orden = orderRepository.save(order);
-
         return new MessageDTO("A new order with id " + orden.getId().toString() + " was created.");
-        /* return order.getId().toString();*/
     }
 
     @Override

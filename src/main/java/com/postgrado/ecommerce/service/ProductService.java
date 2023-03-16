@@ -12,16 +12,16 @@ import org.springframework.data.domain.Pageable;
 
 public interface ProductService {
 
-  Product save(ProductDTO productDTO);
+    Product save(ProductDTO productDTO);
 
-  Product getById(UUID id);
+    Product getById(UUID id);
 
-  Page<Product> getProductsPageable(Pageable pageable);
+    Page<Product> getProductsPageable(Pageable pageable);
 
-  PageDTO<Product> getFilteredProducts(Double minPrice, Double maxPrice, Pageable pageable);
+    PageDTO<Product> getFilteredProducts(Double minPrice, Double maxPrice, Pageable pageable);
 
-  List<ProductDTO> getProductByCategory(String categoryId);
+    List<ProductDTO> getProductByCategory(String categoryId);
 
-  Product updateProduct(UUID id, ProductDTO productDTO);
+    Product updateProduct(UUID id, ProductDTO productDTO);
 
 }

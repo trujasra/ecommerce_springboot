@@ -21,72 +21,66 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProductServiceImpl implements ProductService {
 
-  private CategoryService categoryService;
-  private ProductRepository productRepository;
+    private CategoryService categoryService;
+    private ProductRepository productRepository;
 
-  private ProductMapper productMapper;
+    private ProductMapper productMapper;
 
-  @Override
-  public Product save(ProductDTO productDTO) {
+    @Override
+    public Product save(ProductDTO productDTO) {
 
-    Category category = categoryService.getById(productDTO.getCategoryId());
-    Product product = productMapper.convertToProduct(productDTO);
-    product.setCategory(category);
+        Category category = categoryService.getById(productDTO.getCategoryId());
+        Product product = productMapper.convertToProduct(productDTO);
+        product.setCategory(category);
 
-    return productRepository.save(product);
-  }
+        return productRepository.save(product);
+    }
 
-  @Override
-  public Product getById(UUID id) {
-    return productRepository.findById(id)
-        .orElseThrow(() -> new EntityNotFoundException("Product", id));
-  }
+    @Override
+    public Product getById(UUID id) {
+        return productRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Product", id));
+    }
 
-  @Override
-  public Page<Product> getProductsPageable(Pageable pageable) {
-    return productRepository.findAll(pageable);
-  }
+    @Override
+    public Page<Product> getProductsPageable(Pageable pageable) {
+        return productRepository.findAll(pageable);
+    }
 
-  @Override
-  public PageDTO<Product> getFilteredProducts(Double minPrice, Double maxPrice, Pageable pageable) {
-    Page<Product> page = productRepository.findByPriceBetween(minPrice, maxPrice, pageable);
-    return productMapper.convertToPageDTO(page);
-  }
+    @Override
+    public PageDTO<Product> getFilteredProducts(Double minPrice, Double maxPrice, Pageable pageable) {
+        Page<Product> page = productRepository.findByPriceBetween(minPrice, maxPrice, pageable);
+        return productMapper.convertToPageDTO(page);
+    }
 
-  @Override
-  public List<ProductDTO> getProductByCategory(String categoryId) {
-    List<Product> product = productRepository.getProductByCategory(categoryId);
-    List<ProductDTO> response = product.stream().map(productDto -> {
-      ProductDTO dto = new ProductDTO();
-      dto.setActive(productDto.getActive());
-      dto.setDescription(productDto.getDescription());
-      dto.setImageUrl(productDto.getImageUrl());
-      dto.setImageUrl(productDto.getImageUrl());
-      dto.setName(productDto.getName());
-      dto.setPrice(productDto.getPrice());
-      dto.setStock(productDto.getStock());
-      dto.setCategoryId(productDto.getCategory().getId());
-      return dto;
-    }).toList();
-    return response;
-  }
+    @Override
+    public List<ProductDTO> getProductByCategory(String categoryId) {
+        List<Product> product = productRepository.getProductByCategory(categoryId);
+        List<ProductDTO> response = product.stream().map(producto -> {
+            ProductDTO dto = productMapper.convertToProductDTO(producto);
+            dto.setCategoryId(producto.getCategory().getId());
+            return dto;
+        }).toList();
+        return response;
+    }
 
-  @Override
-  public Product updateProduct(UUID id, ProductDTO productDTO) {
-    Product product = productRepository.findById(id)
-        .orElseThrow(() -> new EntityNotFoundException("Product", id));
+    @Override
+    public Product updateProduct(UUID id, ProductDTO productDTO) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Product", id));
 
-    Category category = categoryService.getById(productDTO.getCategoryId());
+        Category category = categoryService.getById(productDTO.getCategoryId());
 
-    product.setActive(productDTO.isActive());
-    product.setDescription(productDTO.getDescription());
-    product.setImageUrl(productDTO.getImageUrl());
-    product.setName(productDTO.getName());
-    product.setPrice(productDTO.getPrice());
-    product.setStock(productDTO.getStock());
-    product.setCategory(category);
+        product.setActive(productDTO.isActive());
+        product.setDescription(productDTO.getDescription());
+        product.setImageUrl(productDTO.getImageUrl());
+        product.setName(productDTO.getName());
+        product.setPrice(productDTO.getPrice());
+        product.setStock(productDTO.getStock());
+        product.setCategory(category);
 
-    productRepository.save(product);
-    return product;
-  }
+        productRepository.save(product);
+        return product;
+    }
+
 }
