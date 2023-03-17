@@ -1,5 +1,6 @@
 package com.postgrado.ecommerce.exception;
 
+import com.postgrado.ecommerce.exception.response.ErrorConflict;
 import com.postgrado.ecommerce.exception.response.ErrorResponse;
 import com.postgrado.ecommerce.exception.response.FieldErrorModel;
 import com.postgrado.ecommerce.exception.response.ValidationErrorResponse;
@@ -10,6 +11,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.context.request.WebRequest;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -52,5 +54,12 @@ public class ErrorHandler {
         response.setErrors(errors);
         response.setMessage(ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+    @ExceptionHandler(EntityRegisteredException.class)
+    public ResponseEntity<ErrorConflict> handleEntityRegisteredException(EntityRegisteredException ex) {
+        HttpStatus httpStatus = HttpStatus.CONFLICT;
+        ErrorConflict response = new ErrorConflict(ex.getMessage(), ex.getCause().getMessage(), httpStatus.value());
+        return ResponseEntity.status(httpStatus).body(response);
     }
 }
