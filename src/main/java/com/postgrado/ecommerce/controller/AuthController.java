@@ -6,6 +6,8 @@ import com.postgrado.ecommerce.dto.RegistrationRequest;
 import com.postgrado.ecommerce.service.AuthenticationService;
 import com.postgrado.ecommerce.service.EmailService;
 import com.postgrado.ecommerce.service.RegistrationService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+@Api(tags = "Authentication")
 @AllArgsConstructor
 @RestController
 @RequestMapping("/auth")
@@ -27,12 +30,14 @@ public class AuthController {
 
   private AuthenticationService authenticationService;
 
+  @ApiOperation("Register new users")
   @PostMapping("/register")
   public ResponseEntity<String> register(@RequestBody RegistrationRequest request) {
     String token = registrationService.register(request);
     return ResponseEntity.status(HttpStatus.CREATED).body(token);
   }
 
+  @ApiOperation("Confirm Account")
   @GetMapping("/confirm")
   public ResponseEntity<String> confirm(@RequestParam String token) {
     String message = registrationService.confirm(token);
@@ -46,6 +51,7 @@ public class AuthController {
     return "Success";
   }*/
 
+  @ApiOperation("Authenticated users")
   @PostMapping("/login")
   public ResponseEntity<AuthenticationResponse> authenticate(
       @RequestBody AuthenticationRequest request) {

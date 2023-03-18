@@ -4,6 +4,7 @@ import com.postgrado.ecommerce.security.jwt.JwtAuthenticationFilter;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -16,7 +17,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
   private static final String[] RUTAS_PERMITIDAS = {
-      "/auth/**",
       "/v2/api-docs",
       "/swagger-ui/**",
       "/swagger-resources/**",
@@ -32,8 +32,15 @@ public class SecurityConfig {
     http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     http.authorizeRequests((authz) -> {
       authz
-          //.antMatchers("/auth/**").permitAll()
           .antMatchers(RUTAS_PERMITIDAS).permitAll()
+          .antMatchers("/auth/**").permitAll()
+          .antMatchers(HttpMethod.GET, "/categories/**").permitAll()
+          .antMatchers(HttpMethod.GET, "/products/**").permitAll()
+          .antMatchers(HttpMethod.POST, "/orders").hasAuthority("USER")
+          .antMatchers(HttpMethod.POST, "/products").hasAuthority("ADMIN")
+          .antMatchers(HttpMethod.GET, "/roles/**").hasAuthority("ADMIN")
+          .antMatchers(HttpMethod.GET, "/users/**").hasAuthority("ADMIN")
+          .antMatchers(HttpMethod.GET, "/orders/**").hasAuthority("ADMIN")
           .anyRequest().authenticated(); //Esto pone la seguridad a cualquier ruta
     });
     http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

@@ -6,7 +6,8 @@ INSERT IGNORE INTO categories(id, name, description) VALUES ('4c5f3eef-37a1-43bc
 INSERT IGNORE INTO roles(id, name, description) VALUES ('27fea06b-f25c-46c2-880d-23c2b8c21f8d','ADMIN','Rol de administrador');
 INSERT IGNORE INTO roles(id, name, description) VALUES ('577272ea-fe2f-4c7c-833d-597046bc34be','USER','Rol de usuario');
 
-INSERT IGNORE INTO users(id, first_name, last_name, email, password, address, role_id) VALUES ('2099c854-3862-42dd-b198-46f071053e76','Juan','Perez','juanperez@gmail.com','12345678','Las lomas','577272ea-fe2f-4c7c-833d-597046bc34be');
+INSERT IGNORE INTO users(id, first_name, last_name, email, password, address,enable, role_id) VALUES ('2099c854-3862-42dd-b198-46f071053e76','Juan','Perez','admin@gmail.com','$2a$10$kGQXdIZmRyb2feezbcDPbeo/Wbc4Nw8F9Fsh1I8yj2wvSuirHdwCi','El Alto',true,'27fea06b-f25c-46c2-880d-23c2b8c21f8d');
+INSERT IGNORE INTO users(id, first_name, last_name, email, password, address,enable, role_id) VALUES ('a62d6c08-91e1-4ea7-b96a-85d4b85fb151','Maria','Sanchez','user@gmail.com','$2a$10$kGQXdIZmRyb2feezbcDPbeo/Wbc4Nw8F9Fsh1I8yj2wvSuirHdwCi','El Alto',true,'577272ea-fe2f-4c7c-833d-597046bc34be');
 
 INSERT IGNORE INTO products (id, name, description, image_url, price, stock, active, category_id) VALUES('6613fbd7-61d3-49e4-a5e3-9788bea1ea73','Product A','Description del producto A','https://image.png',59.99,130,true,'0243a270-8348-4a7f-867e-6c0cc5984adc');
 INSERT IGNORE INTO products (id, name, description, image_url, price, stock, active, category_id) VALUES ('f2b2f44a-b361-48b1-b86e-65fddf792e30', 'Mochilla Totto', 'Mochilla para niño totto','https://image.png',236.99,20,true,'d20a14b6-15d5-42ee-8779-36ea7be4dc6d');
